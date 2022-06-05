@@ -7,15 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
 @EnableEurekaClient
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UserServiceApplication.class, args);
 	}
-	@RequestMapping(value = "/")
-	public String home() {
-		return "Eureka User application";
-	}
+
 }
