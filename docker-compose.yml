@@ -1,0 +1,56 @@
+version: '3'
+services:
+  eureka-server:
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "9501:9501"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    links:
+      - eureka-server
+  to-do-service:
+    build:
+      context: ./to-do-service
+      dockerfile: Dockerfile
+    ports:
+      - "9502:9502"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    links:
+      - eureka-server
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "9500:9500"
+    depends_on:
+      - user-service
+      - to-do-service
+      - eureka-server
+    links:
+      - eureka-server
+    environment:
+      - spring.profiles.active=path
+      - spring.cloud.gateway.routes[0].uri=http://user-service:9501
+      - spring.cloud.gateway.routes[0].id=user-service
+      - spring.cloud.gateway.routes[0].predicates=Path= /user/*
+      - spring.cloud.gateway.routes[0].filters[0]=StripPrefix=1
+      - spring.cloud.gateway.routes[1].uri=http://to-do-service:9502
+      - spring.cloud.gateway.routes[1].id=to-do-service
+      - spring.cloud.gateway.routes[1].predicates[0]=Path= /todo/*
+      - spring.cloud.gateway.routes[1].filters[0]=StripPrefix=1
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+
