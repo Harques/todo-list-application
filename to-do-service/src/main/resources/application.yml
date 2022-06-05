@@ -1,9 +1,9 @@
 server:
-  port: 9501
+  port: 9502
 
 spring:
   application:
-    name: user-service
+    name: todo-service
 jpa:
   show-sql: true
   hibernate:
