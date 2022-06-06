@@ -9,24 +9,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/")
 public class UserController {
 
-//    private UserService userService;
-//
-//    @Autowired
-//    public UserController(UserService userService){
-//        this.userService = userService;
-//    }
-//
-//    @PostMapping("/")
-//    public User createUser(@RequestBody User user){
-//        return userService.createUser(user);
-//    }
-//
-//    @GetMapping("/{id}")
-//    public User findUser(@PathVariable("id") Long ID){
-//        return userService.findByID(ID);
-//    }
-    @GetMapping
-    public String getString(){
-        return "Neden çalışmıyor";
+    private UserService userService;
+
+    @Autowired
+    public UserController(UserService userService){
+        this.userService = userService;
+    }
+
+    @PostMapping("/")
+    public User createUser(@RequestBody User user){
+        return userService.createUser(user);
+    }
+
+    @GetMapping("/{id}")
+    public User findUser(@PathVariable("id") Long ID){
+        return userService.findByID(ID);
     }
 }
