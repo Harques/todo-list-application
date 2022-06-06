@@ -8,14 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @EnableEurekaClient
-@RestController
 public class ToDoServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ToDoServiceApplication.class, args);
 	}
-	@RequestMapping(value = "/")
-	public String home() {
-		return "Eureka Todo application";
-	}
+
 }

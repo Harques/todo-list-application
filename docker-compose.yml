@@ -46,11 +46,11 @@ services:
       - spring.profiles.active=path
       - spring.cloud.gateway.routes[0].uri=http://user-service:9501
       - spring.cloud.gateway.routes[0].id=user-service
-      - spring.cloud.gateway.routes[0].predicates=Path= /user/*
+      - spring.cloud.gateway.routes[0].predicates=Path= /user/**
       - spring.cloud.gateway.routes[0].filters[0]=StripPrefix=1
       - spring.cloud.gateway.routes[1].uri=http://to-do-service:9502
       - spring.cloud.gateway.routes[1].id=to-do-service
-      - spring.cloud.gateway.routes[1].predicates[0]=Path= /todo/*
+      - spring.cloud.gateway.routes[1].predicates[0]=Path= /todo/**
       - spring.cloud.gateway.routes[1].filters[0]=StripPrefix=1
       - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
 

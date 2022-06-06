@@ -6,6 +6,8 @@ import com.microservices.toDo.repository.ToDoListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ToDoService {
 
@@ -16,15 +18,19 @@ public class ToDoService {
         this.toDoListRepository = toDoListRepository;
     }
 
-    public void createToDoList(){
+    public void createToDoList(Long userID){
         ToDoList toDoList = new ToDoList();
+        toDoList.setUserID(userID);
         toDoListRepository.save(toDoList);
     }
-    public void addToDo(ToDo toDo, ToDoList toDoList){
+    @Transactional
+    public void addToDo(ToDo toDo, Long ID){
+        ToDoList toDoList = toDoListRepository.findByID(ID);
         toDoList.getToDos().add(toDo);
+        toDoListRepository.save(toDoList);
     }
     public ToDoList findListByID(Long ID){
-        return toDoListRepository.getReferenceById(ID);
+        return toDoListRepository.findByID(ID);
     }
 //    public ToDo findByID(Long ID){
 //        return toDoListRepository.findByID(ID);
