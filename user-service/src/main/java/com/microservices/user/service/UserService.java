@@ -19,7 +19,7 @@ public class UserService {
         return userRepository.save(user);
     }
     public User findByID(Long ID){
-        return userRepository.findByID(ID);
+        return userRepository.getReferenceById(ID);
     }
 
 }
