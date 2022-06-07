@@ -1,5 +1,6 @@
 package com.microservices.user.service;
 
+import com.microservices.user.dto.CreateUser;
 import com.microservices.user.entity.User;
 import com.microservices.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

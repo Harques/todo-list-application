@@ -1,8 +1,10 @@
 package com.microservices.user.controller;
 
+import com.microservices.user.dto.CreateUser;
 import com.microservices.user.entity.User;
 import com.microservices.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +18,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/")
-    public User createUser(@RequestBody User user){
+    @CrossOrigin(origins="*")
+    @PostMapping(value = "/",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public User createUser(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email,@RequestParam("password") String password){
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(password);
         return userService.createUser(user);
     }
 
