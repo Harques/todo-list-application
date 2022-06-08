@@ -15,20 +15,16 @@ export default class Login extends Component {
     fetch('http://localhost:9501/login', {
       method: 'POST',
       body: data,
-    }).then(response => {
-        if(response.status == 200){
-            this.context.setAuth = true;
-            console.log(context.auth)
-            //window.location.href = '/deneme'
-
-        }
-        throw new Error(response.status)
+    }).then(response => response.json()).then(json => {
+          localStorage.setItem("auth", true);
+          localStorage.setItem("id", json)
+          window.location.href = '/deneme'
     }).catch(function(){
+        localStorage.setItem("auth", false);
         document.getElementById("error").style.display = "block"
     });
   }
   render() {
-    const context = useContext(Context);
     return (
       <form onSubmit={this.handleSubmit}>
         <h3>Sign In</h3>
@@ -52,7 +48,9 @@ export default class Login extends Component {
             placeholder="Enter password"
           />
         </div>
-
+        <div className="mb-3">
+            <h6 id="error" style={{display:"none", color:"red", textAlign:"center"}}>Invalid email or password.</h6>
+        </div>
         <div className="d-grid">
           <button type="submit" className="btn btn-primary">
             Submit

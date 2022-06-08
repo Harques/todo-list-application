@@ -13,11 +13,10 @@ export default class Register extends Component {
         fetch('http://localhost:9501/register', {
           method: 'POST',
           body: data,
-        }).then(response => {
-            if(response.status == 200){
-                window.location.href = '/deneme'
-            }
-            throw new Error(response.status)
+        }).then(response => response.json()).then(json => {
+          localStorage.setItem("auth", true);
+          localStorage.setItem("id", json)
+          window.location.href = '/deneme'
         }).catch(function(){
             document.getElementById("error").style.display = "block"
         });
