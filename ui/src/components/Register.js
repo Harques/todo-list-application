@@ -10,12 +10,12 @@ export default class Register extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
         
-        fetch('http://localhost:9501/', {
+        fetch('http://localhost:9501/register', {
           method: 'POST',
           body: data,
         }).then(response => {
             if(response.status == 200){
-                window.location.href = '/sign-in'
+                window.location.href = '/deneme'
             }
             throw new Error(response.status)
         }).catch(function(){
