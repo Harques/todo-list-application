@@ -10,6 +10,8 @@ spring:
       ddl-auto: update
   datasource:
     url: jdbc:h2:file:./user-service-db
+  jackson:
+    default-property-inclusion: NON_NULL
 
 eureka:
   client:
@@ -20,3 +22,10 @@ eureka:
       default-zone: http://localhost:8761/eureka
   instance:
     prefer-ip-address: true
+
+#secret key - should be encrypted
+  jwt:
+    secret: secretkey
+  #3 minutes validity
+    token:
+      validity: 180000
