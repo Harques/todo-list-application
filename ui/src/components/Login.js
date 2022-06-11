@@ -12,7 +12,7 @@ export default class Login extends Component {
     event.preventDefault();
     const data = new FormData(event.target);
     
-    fetch('http://localhost:9501/login', {
+    fetch('http://localhost:9500/auth/login', {
       method: 'POST',
       body: data,
     }).then(response => response.json()).then(json => {

@@ -11,9 +11,8 @@ const logOff = () => {
   localStorage.clear()
   window.location.href = '/sign-in'
 }
+const location = useLocation();
   return (
-    <Router>
-      const location = useLocation()
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
@@ -51,7 +50,6 @@ const logOff = () => {
           </div>
         </div>
       </div>
-    </Router>
   )
 }
 export default App

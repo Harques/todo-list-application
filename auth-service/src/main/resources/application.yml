@@ -1,11 +1,9 @@
 server:
-  port: 9500
+  port: 9503
 
 spring:
-  profiles:
-    active: path
   application:
-    name: api-gateway
+    name: auth-service
 
 eureka:
   client:
