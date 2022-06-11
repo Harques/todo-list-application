@@ -3,7 +3,10 @@ package com.microservices.auth.service;
 import com.microservices.auth.entity.AuthLogin;
 import com.microservices.auth.entity.AuthRegister;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,7 +17,10 @@ public class AuthService {
 
     @Autowired
     private RestTemplate restTemplate;
-
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
     public void register(AuthRegister authRegister){
         MultiValueMap<String, String> registerParameters = new LinkedMultiValueMap<String, String>();
         registerParameters.add("firstName", authRegister.getFirstName());

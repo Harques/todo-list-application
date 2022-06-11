@@ -22,19 +22,19 @@ const location = useLocation();
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  {location.pathname === "/sign-in" && <Link className="nav-link" to={'/sign-in'}>
+                  {location.pathname != "/deneme" && <Link className="nav-link" to={'/sign-in'}>
                     Login
                   </Link>}
                 </li>
                 <li className="nav-item">
-                  {location.pathname === "/sign-in" && <Link className="nav-link" to={'/sign-up'}>
+                  {location.pathname != "/deneme" && <Link className="nav-link" to={'/sign-up'}>
                     Register
                   </Link>}
                 </li>
               </ul>
               <ul className="navbar-nav ms-auto">
 			<li className="nav-item">
-			  {location.pathname != "/sign-in" && <a className="nav-link" aria-current="page" onClick={logOff}>Log Off</a>}
+			  {location.pathname === "/deneme" && <a className="nav-link" aria-current="page" onClick={logOff}>Log Off</a>}
 			</li>	
 		  </ul>	
             </div>

@@ -10,7 +10,7 @@ export default class Register extends Component {
         event.preventDefault();
         const data = new FormData(event.target);
         
-        fetch('http://localhost:9501/register', {
+        fetch('http://localhost:9500/auth/register', {
           method: 'POST',
           body: data,
         }).then(response => response.json()).then(json => {

@@ -1,5 +1,6 @@
 import React, { Component, useContext } from 'react'
 import {Context} from './Context'
+import jwt_decode from 'jwt-decode'
 export default class Login extends Component {
   
   constructor() {
@@ -16,9 +17,19 @@ export default class Login extends Component {
       method: 'POST',
       body: data,
     }).then(response => response.json()).then(json => {
+
+          console.log(json)
+          console.log(json.jwtToken)
+          let decodedToken = jwt_decode(json.jwtToken)
+          console.log("Decoded token", decodedToken)
+          var currentDate = new Date();
+          console.log(currentDate.getTime())
+          if(decodedToken.exp * 1000 < currentDate.getTime()){
+            console.log("Token expired")
+          }
           localStorage.setItem("auth", true);
           localStorage.setItem("id", json)
-          window.location.href = '/deneme'
+          // window.location.href = '/deneme'
     }).catch(function(){
         localStorage.setItem("auth", false);
         document.getElementById("error").style.display = "block"

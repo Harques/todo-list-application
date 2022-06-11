@@ -5,6 +5,7 @@ import com.microservices.auth.entity.AuthRegister;
 import com.microservices.auth.models.AuthenticationStatus;
 import com.microservices.auth.models.ErrorResponseDto;
 import com.microservices.auth.models.JwtResponse;
+import com.microservices.auth.models.LoginResponse;
 import com.microservices.auth.security.JwtTokenUtil;
 import com.microservices.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class AuthController {
     public AuthController(JwtTokenUtil jwtTokenUtil){
         this.jwtTokenUtil = jwtTokenUtil;
     }
-    @CrossOrigin
+    @CrossOrigin("*")
     @PostMapping("/register")
     public void register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("password") String password){
         AuthRegister authRegister = new AuthRegister(firstName, lastName, email, password);
         authService.register(authRegister);
     }
-    @CrossOrigin
+    @CrossOrigin("*")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestParam("email") String email, @RequestParam("password") String password){
         AuthLogin authLogin = new AuthLogin(email, password);
@@ -44,7 +45,8 @@ public class AuthController {
             return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
         }
         final String token = jwtTokenUtil.generateToken(email);
-        return ResponseEntity.ok(new JwtResponse(token));
+        LoginResponse loginResponse = new LoginResponse(token, response.getBody().intValue(), HttpStatus.OK.value());
+        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 
 }
