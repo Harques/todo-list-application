@@ -1,12 +1,13 @@
 import React, { useContext } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom'
 import Login from './components/Login'
 import Register from './components/Register'
 import Deneme from './components/Deneme'
 
 function App() {
+  
 const logOff = () => {
   localStorage.clear()
   window.location.href = '/sign-in'
@@ -16,7 +17,7 @@ const location = useLocation();
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
-            <Link className="navbar-brand" to={location.pathname === "/sign-in" && '/sign-in'}>
+            <Link className="navbar-brand" to={location.pathname != "/deneme" && '/sign-in'}>
               To-Do-List
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -43,6 +44,7 @@ const location = useLocation();
         <div className="auth-wrapper">
           <div className="auth-inner">
             <Routes>
+              <Route exact path="/" element={<Login/>}/>
               <Route exact path="/deneme" element={<Deneme />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<Register />} />

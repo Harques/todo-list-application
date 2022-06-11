@@ -41,7 +41,7 @@ public class AuthController {
         AuthLogin authLogin = new AuthLogin(email, password);
         ResponseEntity<Integer> response = authService.login(authLogin);
         if(response.getBody().intValue() == 0){
-            ErrorResponseDto error = new ErrorResponseDto(new Date(), HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED","aa");
+            ErrorResponseDto error = new ErrorResponseDto(new Date(), HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZED","auth/login");
             return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
         }
         final String token = jwtTokenUtil.generateToken(email);
