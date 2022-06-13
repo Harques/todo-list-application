@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate, Switch} from 'react-router-dom'
 import Login from './components/Login'
 import Register from './components/Register'
 import Main from './components/Main'
+import NotFoundPage from './components/NotFoundPage'
 
 function App() {
   
@@ -41,12 +42,16 @@ const location = useLocation();
             </div>
           </div>         
         </nav>
-            <Routes>
-              <Route exact path="/" element={<Login/>}/>
+        <Routes>
+          <Route exact path="/" element={<Login/>}/>
               <Route exact path="/main" element={<Main />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<Register />} />
+              <Route path="*" element={<NotFoundPage/>}/>
             </Routes>
+
+        
+
       </div>
   )
 }
