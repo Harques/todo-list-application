@@ -24,6 +24,8 @@ export default class Register extends Component {
 
   render() {
     return (
+      <div className="auth-wrapper">
+        <div className="auth-inner">
       <form onSubmit={this.handleSubmit}>
         <h3>Register</h3>
         <div className="mb-3">
@@ -70,6 +72,8 @@ export default class Register extends Component {
         </div>
 
       </form>
+      </div>
+      </div>
     )
   }
 }

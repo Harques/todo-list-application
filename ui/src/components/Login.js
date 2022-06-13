@@ -1,5 +1,4 @@
 import React, { Component, useContext } from 'react'
-import {Context} from './Context'
 import jwt_decode from 'jwt-decode'
 export default class Login extends Component {
   
@@ -37,6 +36,8 @@ export default class Login extends Component {
   }
   render() {
     return (
+      <div className="auth-wrapper">
+      <div className="auth-inner">
       <form onSubmit={this.handleSubmit}>
         <h3>Sign In</h3>
         <div className="mb-3">
@@ -68,6 +69,8 @@ export default class Login extends Component {
           </button>
         </div>
       </form>
+      </div>
+      </div>
     )
   }
 }

@@ -4,7 +4,7 @@ import './App.css'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom'
 import Login from './components/Login'
 import Register from './components/Register'
-import Deneme from './components/Deneme'
+import Main from './components/Main'
 
 function App() {
   
@@ -41,16 +41,12 @@ const location = useLocation();
             </div>
           </div>         
         </nav>
-        <div className="auth-wrapper">
-          <div className="auth-inner">
             <Routes>
               <Route exact path="/" element={<Login/>}/>
-              <Route exact path="/deneme" element={<Deneme />} />
+              <Route exact path="/main" element={<Main />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<Register />} />
             </Routes>
-          </div>
-        </div>
       </div>
   )
 }
