@@ -20,10 +20,15 @@ header,
   justify-content: center;
   align-items: center;
 }
+.formClass{
+  min-height: 0;
+  margin-top: 3.5rem;
+  margin-bottom:1.75rem;
+}
 .formInput,
 .formButton {
   padding: 0.5rem;
-  font-size: 2rem;
+  font-size: 1.09rem;
   border: none;
   background: white;
 }
@@ -46,12 +51,13 @@ header,
 .todo-list {
   min-width: 30%;
   list-style: none;
+  padding:0;
 }
 
 .todo {
   margin: 0.5rem;
   background: white;
-  font-size: 1.5rem;
+  font-size: 1.09rem;
   color: black;
   display: flex;
   justify-content: space-between;
@@ -59,7 +65,7 @@ header,
   transition: all 1s ease;
 }
 .filter-todo {
-  padding: 1rem;
+  padding: 0.25rem;
 }
 .todo li {
   flex: 1;
@@ -67,12 +73,12 @@ header,
 
 .trash-btn,
 .complete-btn {
-  background: #ff6f47;
+  background: #3274aa;
   color: white;
   border: none;
   padding: 1rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 .complete-btn {
   background: rgb(11, 212, 162);
@@ -118,8 +124,10 @@ select {
 select {
   color: black;
   font-family: "Poppins", sans-serif;
+  font-size: 0.90rem;
   cursor: pointer;
-  width: 12rem;
+  width: 9rem;
+  height:2.625rem
 }
 /* Arrow */
 .select::after {
@@ -127,15 +135,29 @@ select {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: 0.75rem;
   background: #3274aa;
   color:black;
   cursor: pointer ;
   pointer-events: none;
 }
 /* Transition */
-/*
 .select:hover::after {
-  transform: scale(1.5);
+  transform: scale(1.1);
 }
-*/
+.shrink{
+  -webkit-transform:scale(0.75);
+  -moz-transform:scale(0.75);
+  -ms-transform:scale(0.75);
+  transform:scale(0.75);
+  }
+
+.container-class {
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    margin-left:2.5rem;
+    /* justify-content: auto; */
+    padding:0
+}

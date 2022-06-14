@@ -19,7 +19,7 @@ const Form = (props) => {
     }
     return(
 <form className='formClass'>
-      <input value={props.inputText} onChange={inputTextHandler} type="text" className="todo-input formInput" />
+      <input style={{marginLeft:"1rem"}} value={props.inputText} onChange={inputTextHandler} type="text" className="todo-input formInput" />
       <button onClick={submitTodoHandler} className="todo-button formButton" type="submit">
         <i className="fas fa-plus-square"></i>
       </button>
