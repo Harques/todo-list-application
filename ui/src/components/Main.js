@@ -11,11 +11,11 @@ const Main = () => {
   const isAuth = localStorage.getItem("auth");
     return (
         <>
-       <header>Microservices Todo List</header>
+       <header style={{fontSize:"3rem" ,minHeight:"10vh", marginTop:"3rem", marginBottom:"1rem"}}>Microservices Todo List</header>
         <FormList setTodoLists={setTodoLists} todoLists={todoLists} setInputText={setInputText} inputText={inputText}/>
        <div className="container-class">
         {todoLists.map(todoList => (
-                <TodoListForm name={todoList.name}/>
+                <TodoListForm name={todoList.name} key={todoList.id} setTodoLists={setTodoLists} todoList={todoList} todoLists={todoLists}/>
             ))}
        </div>
         

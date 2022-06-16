@@ -7,6 +7,10 @@ const Form = (props) => {
     }
     const submitTodoHandler = (e) => {
         e.preventDefault();
+        if(props.inputText === ""){
+          alert("Invalid todo name.")
+          return
+      }
         props.setTodos([
             ...props.todos, {
                 text: props.inputText, completed: false, id: Math.random() * 1000
@@ -18,7 +22,7 @@ const Form = (props) => {
         props.setStatus(e.target.value)
     }
     return(
-<form className='formClass'>
+<form style={{marginTop:"0"}} className='formClass'>
       <input style={{marginLeft:"1rem"}} value={props.inputText} onChange={inputTextHandler} type="text" className="todo-input formInput" />
       <button onClick={submitTodoHandler} className="todo-button formButton" type="submit">
         <i className="fas fa-plus-square"></i>

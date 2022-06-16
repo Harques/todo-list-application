@@ -64,15 +64,23 @@ header,
   align-items: center;
   transition: all 1s ease;
 }
+.todo-list-name {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 1s ease;
+}
 .filter-todo {
   padding: 0.25rem;
 }
 .todo li {
-  flex: 1;
+  flex: 1 1;
 }
 
 .trash-btn,
-.complete-btn {
+.complete-btn,
+.uncomplete-btn,
+.calendar-btn{
   background: #3274aa;
   color: white;
   border: none;
@@ -83,13 +91,24 @@ header,
 .complete-btn {
   background: rgb(11, 212, 162);
 }
+.uncomplete-btn {
+  background: rgb(223, 48, 48);
+}
+.calendar-btn{
+  background: rgb(39, 172, 182)
+}
 .todo-item {
   padding: 0rem 0.5rem;
 }
 
 .fa-trash,
-.fa-check {
+.fa-check,
+.fa-xmark,
+.fa-calendar{
   pointer-events: none;
+}
+.fa-check{
+  font-size:70%
 }
 
 
