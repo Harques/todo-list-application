@@ -2,6 +2,7 @@ package com.microservices.toDo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import reactor.util.annotation.Nullable;
 
 
 import javax.persistence.*;
@@ -20,6 +21,9 @@ public class ToDoList{
     @ElementCollection
     @OneToMany(cascade=CascadeType.ALL)
     private List<ToDo> toDos;
+
+    @Nullable
+    private String name;
 
     private Long userID;
     public ToDoList(){
