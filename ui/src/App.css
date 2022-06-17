@@ -180,3 +180,7 @@ select {
     /* justify-content: auto; */
     padding:0
 }
+input[type="button"] {
+  font-family: "Font Awesome 5 Free", "FontAwesome";
+  font-weight: 900;
+}

@@ -6,7 +6,10 @@ import DatePicker from 'react-datepicker'
 const Todo = (props) => {
 
     useEffect(() => {
-        $("#date").datepicker()
+        $("#date").datepicker({
+            minDate:0,
+            dateFormat:"dd-mm-yy"
+        })
     }, [])
     const deleteHandler = () => {
         props.setTodos(props.todos.filter(el => el.id !== props.todo.id))
@@ -25,7 +28,7 @@ const Todo = (props) => {
         <div className="todo">
             <li className={`todo-item ${props.todo.completed ? "completed" : ""}`}>{props.text}</li>
             <button onClick={completeHandler} className={props.todo.completed? "uncomplete-btn" :"complete-btn"}><i className={`fas ${props.todo.completed? "fa-times" : "fa-check"}`}></i></button>
-            <button id="date" className="calendar-btn"><i className="fas fa-calendar"></i></button>
+            <input value="&#xf133;" type="button" id="date" className="calendar-btn"></input>
             <button onClick={deleteHandler} className="trash-btn"><i className="fas fa-trash"></i></button>
 
         
