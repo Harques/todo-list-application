@@ -6,11 +6,16 @@ const FormList = (props) => {
         props.setInputText(e.target.value);
     }
     const submitListHandler = (e) => {
-        fetch('http://localhost:9500/auth/login', {
+        fetch('http://localhost:9500/todo/user/', {
         method: 'POST',
-        body: props.inputText,
-    }).then(response => response.json()).then(json => {
-
+        headers: new Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem("token"),
+            'Content-Type': 'application/json'
+          }),
+        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), name: props.inputText}) 
+    }).then(response => {
+        if(response.status !== 200)
+            alert("An error occured while creating the todo list.")
     }).catch(function(){    
         // localStorage.setItem("auth", false);
         // document.getElementById("error").style.display = "block"

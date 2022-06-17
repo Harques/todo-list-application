@@ -13,7 +13,7 @@ const Form = (props) => {
       }
         props.setTodos([
             ...props.todos, {
-                text: props.inputText, completed: false, id: Math.random() * 1000
+                text: props.inputText, completed: false, date:"",id: Math.random() * 1000
             }
         ])
         props.setInputText("");

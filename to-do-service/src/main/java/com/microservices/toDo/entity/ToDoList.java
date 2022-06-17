@@ -25,7 +25,7 @@ public class ToDoList{
 
     private String name;
 
-    private Long userID;
+    private String userEmail;
     public ToDoList(){
         toDos = new ArrayList<>();
     }
