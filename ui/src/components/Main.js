@@ -14,6 +14,25 @@ const Main = () => {
   }, [])
 
   useEffect(() => {
+    fetch('http://localhost:9500/todo/list/' + JSON.parse(localStorage.getItem("userEmail")), {
+      method: 'GET',
+      headers: new Headers({
+          'Authorization': 'Bearer ' + localStorage.getItem("token")
+        }),
+  }).then(response => {
+      console.log(response)
+      if(response.status !== 200)
+          alert("An error occured while creating the todo list.")
+      return response.json()
+  }).then(json => {
+    setTodoLists(json)
+  }).catch(function(){    
+      // localStorage.setItem("auth", false);
+      // document.getElementById("error").style.display = "block"
+  });
+  }, [])
+
+  useEffect(() => {
 
   }, [userToken])
 
