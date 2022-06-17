@@ -14,9 +14,9 @@ export default class Register extends Component {
           method: 'POST',
           body: data,
         }).then(response => response.json()).then(json => {
-          localStorage.setItem("auth", true);
-          localStorage.setItem("id", json)
-          window.location.href = '/deneme'
+          if(json.status === 200){
+            window.location.href = 'login'
+          }
         }).catch(function(){
             document.getElementById("error").style.display = "block"
         });

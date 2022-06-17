@@ -22,7 +22,7 @@ public class ToDoList{
     @OneToMany(cascade=CascadeType.ALL)
     private List<ToDo> toDos;
 
-    @Nullable
+
     private String name;
 
     private Long userID;

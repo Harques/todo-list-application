@@ -31,14 +31,15 @@ public class UserController {
     }
     @CrossOrigin
     @PostMapping(value = "/register")
-    public User createUser(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email,@RequestParam("password") String password){
+    public ResponseEntity<Boolean> createUser(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email,@RequestParam("password") String password){
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(passwordEncoder().encode(password));
-        System.out.println("User döndü.");
-        return userService.createUser(user);
+        User newUser = userService.createUser(user);
+        if(newUser == null) return ResponseEntity.ok().body(false);
+        return ResponseEntity.ok().body(true);
     }
     @CrossOrigin(origins = "*")
     @PostMapping(value = "/login")

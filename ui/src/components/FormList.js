@@ -6,6 +6,15 @@ const FormList = (props) => {
         props.setInputText(e.target.value);
     }
     const submitListHandler = (e) => {
+        fetch('http://localhost:9500/auth/login', {
+        method: 'POST',
+        body: props.inputText,
+    }).then(response => response.json()).then(json => {
+
+    }).catch(function(){    
+        // localStorage.setItem("auth", false);
+        // document.getElementById("error").style.display = "block"
+    });
         e.preventDefault();
         if(props.inputText === ""){
             alert("Invalid todo list name.")

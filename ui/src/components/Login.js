@@ -20,17 +20,16 @@ export default class Login extends Component {
           console.log(json)
           console.log(json.jwtToken)
           let decodedToken = jwt_decode(json.jwtToken)
-          console.log("Decoded token", decodedToken)
-          var currentDate = new Date();
-          console.log(currentDate.getTime())
-          if(decodedToken.exp * 1000 < currentDate.getTime()){
-            console.log("Token expired")
-          }
-          localStorage.setItem("auth", true);
-          localStorage.setItem("id", json)
-          // window.location.href = '/deneme'
+          localStorage.setItem("userEmail",JSON.stringify(decodedToken.sub))
+          localStorage.setItem("expire", JSON.stringify(decodedToken.exp))
+          localStorage.setItem("token", json.jwtToken)
+          // console.log(currentDate.getTime())
+          // if(decodedToken.exp * 1000 < currentDate.getTime()){
+          //   console.log("Token expired")
+          // }
+          window.location.href = '/main'
     }).catch(function(){
-        localStorage.setItem("auth", false);
+        localStorage.clear("token");
         document.getElementById("error").style.display = "block"
     });
   }

@@ -2,10 +2,7 @@ package com.microservices.auth.controller;
 
 import com.microservices.auth.entity.AuthLogin;
 import com.microservices.auth.entity.AuthRegister;
-import com.microservices.auth.models.AuthenticationStatus;
-import com.microservices.auth.models.ErrorResponseDto;
-import com.microservices.auth.models.JwtResponse;
-import com.microservices.auth.models.LoginResponse;
+import com.microservices.auth.models.*;
 import com.microservices.auth.security.JwtTokenUtil;
 import com.microservices.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +28,15 @@ public class AuthController {
     }
     @CrossOrigin("*")
     @PostMapping("/register")
-    public void register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("password") String password){
+    public ResponseEntity<?> register(@RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName, @RequestParam("email") String email, @RequestParam("password") String password){
         AuthRegister authRegister = new AuthRegister(firstName, lastName, email, password);
-        authService.register(authRegister);
+        ResponseEntity<Boolean> response =  authService.register(authRegister);
+        if(response.getBody() == false){
+            ErrorResponseDto error = new ErrorResponseDto(new Date(), HttpStatus.BAD_REQUEST.value(), "BAD_REQUEST","auth/login");
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+        RegisterResponse registerResponse = new RegisterResponse(HttpStatus.OK.value());
+        return new ResponseEntity<>(registerResponse,HttpStatus.OK);
     }
     @CrossOrigin("*")
     @PostMapping("/login")

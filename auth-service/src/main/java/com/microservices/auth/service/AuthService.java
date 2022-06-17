@@ -21,14 +21,14 @@ public class AuthService {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    public void register(AuthRegister authRegister){
+    public ResponseEntity<Boolean> register(AuthRegister authRegister){
         MultiValueMap<String, String> registerParameters = new LinkedMultiValueMap<String, String>();
         registerParameters.add("firstName", authRegister.getFirstName());
         registerParameters.add("lastName", authRegister.getLastName());
         registerParameters.add("email", authRegister.getEmail());
         registerParameters.add("password", authRegister.getPassword());
 
-        ResponseEntity<String> response = restTemplate.postForEntity("http://localhost:9501/register", registerParameters, String.class);
+        return restTemplate.postForEntity("http://localhost:9501/register", registerParameters, Boolean.class);
     }
 
     public ResponseEntity<Integer> login(AuthLogin authLogin){

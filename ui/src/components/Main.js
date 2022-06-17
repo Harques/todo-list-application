@@ -7,8 +7,31 @@ import FormList from './FormList'
 const Main = () => {
   const [inputText, setInputText] = useState("");
   const [todoLists, setTodoLists] = useState([])
+  const [userToken, setUserToken] = useState();
    
-  const isAuth = localStorage.getItem("auth");
+  useEffect(() => {
+    setUserToken(localStorage.getItem("token"))
+  }, [])
+
+  useEffect(() => {
+
+  }, [userToken])
+
+  var currentDate = new Date();
+  console.log((localStorage.getItem("expire") * 1000)- currentDate.getTime())
+  setTimeout(() => {
+    localStorage.clear("userEmail")
+    localStorage.clear("expire")
+    localStorage.clear("token")
+    setUserToken()
+  },(localStorage.getItem("expire") * 1000)-currentDate.getTime())
+
+  const isAuth = localStorage.getItem("token");
+  if(!isAuth || isAuth === null){
+    return (
+      <Navigate to="/sign-in"/>
+    )
+  }
     return (
         <>
        <header style={{fontSize:"3rem" ,minHeight:"10vh", marginTop:"3rem", marginBottom:"1rem"}}>Microservices Todo List</header>
