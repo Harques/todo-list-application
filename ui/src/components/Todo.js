@@ -8,7 +8,14 @@ const Todo = (props) => {
     useEffect(() => {
         $("#date").datepicker({
             minDate:0,
-            dateFormat:"dd-mm-yy"
+            dateFormat:"dd-mm-yy",
+            showButtonPanel: true,
+            closeText: "Clear/Cancel",
+            onClose: function(dateText, obj ){
+                if ($(window.event.srcElement).hasClass('ui-datepicker-close'))
+                $("#date").val('\uf133');
+            }
+            
         })
     }, [])
     const deleteHandler = () => {
