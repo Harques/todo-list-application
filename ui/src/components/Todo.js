@@ -54,17 +54,55 @@ const Todo = (props) => {
     }
 
     const deleteHandler = () => {
-        props.setTodos(props.todos.filter(el => el.id !== props.todo.id))
-    }
+        fetch('http://localhost:9502/delete/', {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem("token"),
+            'Content-Type': 'application/json'
+          }),
+        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), id: props.todo.id, toDoListid: props.toDoList.id}) 
+    }).then(response => {
+        let ok = true
+        if(response.status !== 200){
+            ok = false
+            alert("An error occured while deleting the todo.")
+        }
+        if(ok === true){
+            props.setTodos(props.todos.filter(el => el.id !== props.todo.id))
+        }
+    }).catch(function(){    
+
+    });
+
+        
+  }
     const completeHandler = () => {
-        props.setTodos(props.todos.map(item => {
-            if(item.id === props.todo.id){
-                return {
-                    ...item, completed: !item.completed
+        fetch('http://localhost:9502/complete/', {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem("token"),
+            'Content-Type': 'application/json'
+          }),
+        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), id: props.todo.id, toDoListid: props.toDoList.id}) 
+    }).then(response => {
+        let ok = true
+        if(response.status !== 200){
+            ok = false
+            alert("An error occured while completing/uncompleting the todo.")
+        }
+        if(ok === true){
+            props.setTodos(props.todos.map(item => {
+                if(item.id === props.todo.id){
+                    return {
+                        ...item, completed: !item.completed
+                    }
                 }
-            }
-            return item;
-        }))
+                return item;
+            }))
+        }
+    }).catch(function(){    
+
+    });
     }
     const dateHandler = () => {
         console.log("Something in the way")

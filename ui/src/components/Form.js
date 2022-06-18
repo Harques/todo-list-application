@@ -11,14 +11,32 @@ const Form = (props) => {
           alert("Invalid todo name.")
           return
       }
-        props.setTodos([
+      fetch('http://localhost:9502/add/', {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem("token"),
+            'Content-Type': 'application/json'
+          }),
+        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), text: props.inputText, id: props.todos.length === 0 ? 0 : Math.max.apply(Math,props.todos.map(o => o.id)) + 1, completed:false, date:"", toDoListid: props.toDoList.id}) 
+    }).then(response => {
+        let ok = true
+        if(response.status !== 200){
+            ok = false
+            alert("An error occured while adding the todo.")
+        }
+        if(ok === true){
+          props.setTodos([
             ...props.todos, {
-                text: props.inputText, completed: false, date:"",id: Math.random() * 1000
-            }
-        ])
+                text: props.inputText, completed: false, date: new Date(), id:props.todos.length === 0 ? 0 : Math.max.apply(Math,props.todos.map(o => o.id)) + 1
+    }])
+        }
+    }).catch(function(){    
+
+    });
+
         props.setInputText("");
     }
-    const statusHandler = (e) => {
+        const statusHandler = (e) => {
         props.setStatus(e.target.value)
     }
     return(

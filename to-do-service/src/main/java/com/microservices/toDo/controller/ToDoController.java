@@ -2,6 +2,7 @@ package com.microservices.toDo.controller;
 
 import com.microservices.toDo.dto.ToDoListRequest;
 import com.microservices.toDo.dto.ToDoListResponse;
+import com.microservices.toDo.dto.ToDoRequest;
 import com.microservices.toDo.entity.ToDo;
 import com.microservices.toDo.entity.ToDoList;
 import com.microservices.toDo.service.ToDoService;
@@ -22,14 +23,24 @@ public class ToDoController {
         this.toDoService = toDoService;
     }
     @CrossOrigin("*")
-    @PostMapping("/{id}")
-    public void addTodo(@RequestBody ToDo todo, @PathVariable("id") Long ID){
-        toDoService.addToDo(todo, ID);
+    @PostMapping("add")
+    public void addTodo(@RequestBody ToDoRequest toDoRequest){
+        toDoService.addToDo(toDoRequest);
+    }
+    @CrossOrigin("*")
+    @PostMapping("delete")
+    public void deleteTodo(@RequestBody ToDoRequest toDoRequest){
+        toDoService.clearToDo(toDoRequest);
+    }
+    @CrossOrigin("*")
+    @PostMapping("complete")
+    public void completeTodo(@RequestBody ToDoRequest toDoRequest){
+        toDoService.completeToDo(toDoRequest);
     }
     @CrossOrigin("*")
     @PostMapping("user")
     public ResponseEntity<Boolean> createList(@RequestBody ToDoListRequest dto){
-        ToDoList toDoList = toDoService.createToDoList(dto.getUserEmail(), dto.getName());
+        ToDoList toDoList = toDoService.createToDoList(dto.getUserEmail(), dto.getName(), dto.getId());
         if(toDoList == null) return ResponseEntity.ok().body(false);
         return ResponseEntity.ok().body(true);
     }
@@ -37,6 +48,16 @@ public class ToDoController {
     @GetMapping("list/{email}")
     public List<ToDoListResponse> getAllLists(@PathVariable("email") String userEmail){
         return toDoService.findAllLists(userEmail);
+    }
+    @CrossOrigin("*")
+    @GetMapping("deleteAll/{email}")
+    public void deleteAllLists(@PathVariable("email") String userEmail){
+        toDoService.deleteAllLists(userEmail);
+    }
+    @CrossOrigin("*")
+    @PostMapping("deleteList")
+    public void deleteList(@RequestBody ToDoListRequest dto){
+        toDoService.deleteList(dto);
     }
 
 }

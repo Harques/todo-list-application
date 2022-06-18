@@ -11,4 +11,7 @@ public interface ToDoListRepository extends JpaRepository<ToDoList, Long> {
 
     @Query("SELECT t FROM ToDoList t WHERE t.userEmail = ?1")
     List<ToDoList> findAllByUserEmail(String userEmail);
+
+    @Query("SELECT t FROM ToDoList t WHERE t.userEmail = ?1 AND t.ID = ?2" )
+    ToDoList findListByUserEmailAndID(String userEmail, Long ID);
 }

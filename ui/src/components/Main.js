@@ -22,13 +22,11 @@ const Main = () => {
   }).then(response => {
       console.log(response)
       if(response.status !== 200)
-          alert("An error occured while creating the todo list.")
+          alert("An error occured while getting the todo lists.")
       return response.json()
   }).then(json => {
     setTodoLists(json)
   }).catch(function(){    
-      // localStorage.setItem("auth", false);
-      // document.getElementById("error").style.display = "block"
   });
   }, [])
 

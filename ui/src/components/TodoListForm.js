@@ -7,7 +7,7 @@ const TodoListForm = (props) => {
     const [status, setStatus] = useState("all")
     const [filteredTodos, setFilteredTodos] = useState([])
     useEffect(()=>{
-        console.log("First")
+        setTodos(props.todoList.toDos)
         // getLocalTodos()
       }, [])
 
@@ -32,7 +32,27 @@ const TodoListForm = (props) => {
     }
     const deleteHandler = () => {
       console.log(props.todoLists)
-      props.setTodoLists(props.todoLists.filter(el => el.id !== props.todoList.id))
+      fetch('http://localhost:9500/todo/deleteList/', {
+      method: 'POST',
+      headers: new Headers({
+          'Authorization': 'Bearer ' + localStorage.getItem("token"),
+          'Content-Type': 'application/json'
+        }),
+      body: JSON.stringify({
+        userEmail: JSON.parse(localStorage.getItem("userEmail")),
+        id : props.todoList.id
+      })
+      }).then(response => {
+      console.log(response)
+      if(response.status !== 200)
+          alert("An error occured while deleting the todo list.")
+      else{
+        props.setTodoLists(props.todoLists.filter(el => el.id !== props.todoList.id))
+      }
+      return response.json()
+      }).then(json => {
+      }).catch(function(){    
+      });
   }
     const filterHandler = () => {
         switch(status){
@@ -49,8 +69,8 @@ const TodoListForm = (props) => {
       }
     return(
         <div style={{border:"2px solid black", borderRadius:"50px"}}>
-        <h2 style={{marginTop:"0.5rem",marginBottom:"0.5rem"}} className='formClass'>{props.name}<button onClick={deleteHandler} style={{marginLeft:"0.5rem"}} className="trash-btn"><i className="fas fa-trash"></i></button></h2>        <Form setStatus={setStatus} todos={todos} setTodos={setTodos} setInputText={setInputText} inputText={inputText} className="todoForm"/>
-        <TodoList filteredTodos={filteredTodos} setTodos={setTodos} todos={todos}/>
+        <h2 style={{marginTop:"0.5rem",marginBottom:"0.5rem"}} className='formClass'>{props.name}<button onClick={deleteHandler} style={{marginLeft:"0.5rem"}} className="trash-btn"><i className="fas fa-trash"></i></button></h2><Form setStatus={setStatus} todos={todos} setTodos={setTodos} setInputText={setInputText} inputText={inputText} toDoList={props.todoList} className="todoForm"/>
+        <TodoList filteredTodos={filteredTodos} setTodos={setTodos} todos={todos} toDoList={props.todoList}/>
         </div>
     )
 }

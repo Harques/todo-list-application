@@ -3,6 +3,7 @@ package com.microservices.toDo.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,11 +12,14 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@IdClass(ToDoCompositeKey.class)
 public class ToDo{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
-    private Date dueDate;
-    private String toDoJob;
+    private Long id;
+    @Id
+    private Long toDoListid;
+    private Date date;
+    private String text;
+    private Boolean completed;
 
 }

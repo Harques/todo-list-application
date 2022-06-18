@@ -16,12 +16,10 @@ import java.util.List;
 public class ToDoList{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
     @ElementCollection
     @OneToMany(cascade=CascadeType.ALL)
     private List<ToDo> toDos;
-
 
     private String name;
 

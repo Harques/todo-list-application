@@ -10,5 +10,6 @@ import lombok.*;
 public class ToDoListRequest {
     private String name;
     private String userEmail;
+    private Long id;
 
 }

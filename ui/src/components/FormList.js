@@ -6,16 +6,28 @@ const FormList = (props) => {
         props.setInputText(e.target.value);
     }
     const submitListHandler = (e) => {
+        let IDValue = props.todoLists.length === 0 ? 0 : Math.max.apply(Math,props.todoLists.map(o => o.id)) + 1
+        console.log(IDValue)
         fetch('http://localhost:9500/todo/user/', {
         method: 'POST',
         headers: new Headers({
             'Authorization': 'Bearer ' + localStorage.getItem("token"),
             'Content-Type': 'application/json'
           }),
-        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), name: props.inputText}) 
+        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), name: props.inputText, id: IDValue }) 
     }).then(response => {
-        if(response.status !== 200)
+        let ok = true
+        if(response.status !== 200){
+            ok = false
             alert("An error occured while creating the todo list.")
+        }
+        if(ok === true){
+            props.setTodoLists([
+                ...props.todoLists, {
+                    name: props.inputText, toDos:[], id: IDValue
+                }
+            ])
+        }
     }).catch(function(){    
         // localStorage.setItem("auth", false);
         // document.getElementById("error").style.display = "block"
@@ -25,11 +37,7 @@ const FormList = (props) => {
             alert("Invalid todo list name.")
             return
         }
-        props.setTodoLists([
-            ...props.todoLists, {
-                name: props.inputText, toDos:[], id: Math.random() * 1000
-            }
-        ])
+
         props.setInputText("");
     }
     return(
