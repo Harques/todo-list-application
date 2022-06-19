@@ -1,5 +1,6 @@
 package com.microservices.toDo.controller;
 
+import com.microservices.toDo.dto.ToDoDateRequest;
 import com.microservices.toDo.dto.ToDoListRequest;
 import com.microservices.toDo.dto.ToDoListResponse;
 import com.microservices.toDo.dto.ToDoRequest;
@@ -37,6 +38,12 @@ public class ToDoController {
     public void completeTodo(@RequestBody ToDoRequest toDoRequest){
         toDoService.completeToDo(toDoRequest);
     }
+
+    @CrossOrigin("*")
+    @PostMapping("date")
+    public void date(@RequestBody ToDoRequest toDoRequest) {
+        toDoService.date(toDoRequest);}
+
     @CrossOrigin("*")
     @PostMapping("user")
     public ResponseEntity<Boolean> createList(@RequestBody ToDoListRequest dto){

@@ -27,7 +27,7 @@ const Form = (props) => {
         if(ok === true){
           props.setTodos([
             ...props.todos, {
-                text: props.inputText, completed: false, date: new Date(), id:props.todos.length === 0 ? 0 : Math.max.apply(Math,props.todos.map(o => o.id)) + 1
+                text: props.inputText, completed: false, date: null, id:props.todos.length === 0 ? 0 : Math.max.apply(Math,props.todos.map(o => o.id)) + 1
     }])
         }
     }).catch(function(){    

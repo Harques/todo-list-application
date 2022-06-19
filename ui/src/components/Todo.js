@@ -4,22 +4,34 @@ import 'jquery-ui-dist/jquery-ui';
 import DatePicker from 'react-datepicker'
 
 const Todo = (props) => {
-    const [inputDate, setInputDate] = useState("\uf133")
+    const [inputDate, setInputDate] = useState('\uf133')
+    
+    useEffect(() => {
+        if(props.todo.date !== null && props.todo.date !== ""){
+            let a = props.todo.date.slice(0,10)
+            let year = a.slice(0,4)
+            let month = a.slice(5,7);
+            let day = a.slice(8,11)
+            let date = day + "-" + month + "-" + year
+            setInputDate(date)
+        }
+    },[])
 
 
     useEffect(() => {
-        $("#date"+(Math.floor(props.todo.id).toString())).datepicker({
+    $("#date"+props.toDoList.id.toString()+props.todo.id.toString()).datepicker({
             minDate:0,
             dateFormat:"dd-mm-yy",
             showButtonPanel: true,
             closeText: "Clear/Cancel",
             onClose: function(dateText, obj ){
                 if ($(window.event.srcElement).hasClass('ui-datepicker-close')){
-                    $("#date"+(Math.floor(props.todo.id)).toString()).val('\uf133');
+                    debugger;
+                    $("#date"+props.toDoList.id.toString()+props.todo.id.toString()).val('\uf133');
                     inputDateDeleteHandler($("#date"+(Math.floor(props.todo.id)).toString()).val())
                 }
                 else{
-                    inputDateAddHandler($("#date"+(Math.floor(props.todo.id)).toString()).val())
+                    inputDateAddHandler($("#date"+props.toDoList.id.toString()+props.todo.id.toString()).val())
                 }
             }
             
@@ -27,29 +39,68 @@ const Todo = (props) => {
     }, [])
 
     const inputDateAddHandler = (e) => {
-        setInputDate(e);
-        props.setTodos(props.todos.map(item => {
-            if(item.id === props.todo.id){
-                return {
-                    ...item, date : e
+        if(e.length === 1)
+            return
+        fetch('http://localhost:9502/date/', {
+        method: 'POST',
+        headers: new Headers({
+            'Authorization': 'Bearer ' + localStorage.getItem("token"),
+            'Content-Type': 'application/json'
+          }),
+        body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), id: props.todo.id, toDoListid: props.toDoList.id, date: e}) 
+    }).then(response => {
+        let ok = true
+        if(response.status !== 200){
+            ok = false
+            alert("An error occured while changing the date of the todo.")
+        }
+        if(ok === true){
+            setInputDate(e);
+            props.setTodos(props.todos.map(item => {
+                if(item.id === props.todo.id){
+                    return {
+                        ...item, date : e
+                    }
                 }
-            }
-            return item;
+                return item;
+    
+            }))
+        }
+    }).catch(function(){    
 
-        }))
+    });
 
     }
     const inputDateDeleteHandler = (e) => {
-        setInputDate(e);
-        props.setTodos(props.todos.map(item => {
-            if(item.id === props.todo.id){
-                return {
-                    ...item, date : ""
-                }
+        fetch('http://localhost:9502/date/', {
+            method: 'POST',
+            headers: new Headers({
+                'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                'Content-Type': 'application/json'
+              }),
+            body: JSON.stringify({userEmail: JSON.parse(localStorage.getItem("userEmail")), id: props.todo.id, toDoListid: props.toDoList.id, date: ""}) 
+        }).then(response => {
+            let ok = true
+            if(response.status !== 200){
+                ok = false
+                alert("An error occured while clearing the date of the todo.")
             }
-            return item;
+            if(ok === true){
+                setInputDate(e);
+                props.setTodos(props.todos.map(item => {
+                    if(item.id === props.todo.id){
+                        return {
+                            ...item, date : ""
+                        }
+                    }
+                    return item;
+        
+                }))
+            }
+        }).catch(function(){    
+    
+        });
 
-        }))
 
     }
 
@@ -112,7 +163,7 @@ const Todo = (props) => {
         <div className="todo">
             <li className={`todo-item ${props.todo.completed ? "completed" : ""}`}>{props.text}</li>
             <button onClick={completeHandler} className={props.todo.completed? "uncomplete-btn" :"complete-btn"}><i className={`fas ${props.todo.completed? "fa-times" : "fa-check"}`}></i></button>
-            <input value={inputDate} type="button" id={`date${Math.floor(props.todo.id).toString()}`} className="dans calendar-btn"></input>
+            <input value={inputDate} type="button" id={`date${props.toDoList.id.toString() + props.todo.id.toString()}`} className="calendar-btn"></input>
             <button onClick={deleteHandler} className="trash-btn"><i className="fas fa-trash"></i></button>
         </div>
     );

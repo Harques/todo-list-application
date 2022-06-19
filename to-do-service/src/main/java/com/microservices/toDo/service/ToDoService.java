@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 
@@ -59,6 +61,17 @@ public class ToDoService {
         toDoList.setToDos(toDoList.getToDos().stream().map( t -> {
             if(t.getId() == toDoRequest.getId()){
                 t.setCompleted(!t.getCompleted());
+            }
+            return t;
+        }).collect(Collectors.toList()));
+    }
+
+    @Transactional
+    public void date(ToDoRequest toDoRequest){
+        ToDoList toDoList = toDoListRepository.findListByUserEmailAndID(toDoRequest.getUserEmail(), toDoRequest.getToDoListid());
+        toDoList.setToDos(toDoList.getToDos().stream().map( t -> {
+            if(t.getId() == toDoRequest.getId()){
+                t.setDate(toDoRequest.getDate());
             }
             return t;
         }).collect(Collectors.toList()));

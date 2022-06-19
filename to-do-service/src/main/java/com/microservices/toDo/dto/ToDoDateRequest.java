@@ -1,6 +1,5 @@
 package com.microservices.toDo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.util.Date;
 
@@ -9,12 +8,9 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ToDoRequest {
+public class ToDoDateRequest {
     private Long id;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date date;
-    private String text;
-    private Boolean completed;
+    private String date;
     private String userEmail;
     private Long toDoListid;
 
