@@ -60,4 +60,9 @@ public class UserController {
     public List<User> findAll(){
         return userService.findAll();
     }
+
+    @GetMapping("/deleteAll")
+    public void deleteAll(){
+        userService.deleteAll();
+    }
 }

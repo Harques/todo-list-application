@@ -27,4 +27,6 @@ public class UserService {
     public User findByEmail(String email){return userRepository.findByEmail(email);}
     public List<User> findAll(){return userRepository.findAll();}
 
+    public void deleteAll(){ userRepository.deleteAll();}
+
 }
