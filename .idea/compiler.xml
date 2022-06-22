@@ -12,6 +12,7 @@
         <module name="to-do-service" />
         <module name="user-service" />
         <module name="eureka-server" />
+        <module name="notification-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,6 +27,7 @@
       <module name="auth-service" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
       <module name="to-do-service" options="-parameters" />
       <module name="todo-list-application" options="-parameters" />
       <module name="todo-service" options="-parameters" />

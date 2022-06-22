@@ -26,7 +26,6 @@ const Todo = (props) => {
             closeText: "Clear/Cancel",
             onClose: function(dateText, obj ){
                 if ($(window.event.srcElement).hasClass('ui-datepicker-close')){
-                    debugger;
                     $("#date"+props.toDoList.id.toString()+props.todo.id.toString()).val('\uf133');
                     inputDateDeleteHandler($("#date"+(Math.floor(props.todo.id)).toString()).val())
                 }
