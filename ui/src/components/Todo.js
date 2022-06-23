@@ -40,7 +40,7 @@ const Todo = (props) => {
     const inputDateAddHandler = (e) => {
         if(e.length === 1)
             return
-        fetch('http://localhost:9502/date/', {
+        fetch('http://localhost:9500/todo/date/', {
         method: 'POST',
         headers: new Headers({
             'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -71,7 +71,7 @@ const Todo = (props) => {
 
     }
     const inputDateDeleteHandler = (e) => {
-        fetch('http://localhost:9502/date/', {
+        fetch('http://localhost:9500/todo/date/', {
             method: 'POST',
             headers: new Headers({
                 'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -104,7 +104,7 @@ const Todo = (props) => {
     }
 
     const deleteHandler = () => {
-        fetch('http://localhost:9502/delete/', {
+        fetch('http://localhost:9500/todo/delete/', {
         method: 'POST',
         headers: new Headers({
             'Authorization': 'Bearer ' + localStorage.getItem("token"),
@@ -127,7 +127,7 @@ const Todo = (props) => {
         
   }
     const completeHandler = () => {
-        fetch('http://localhost:9502/complete/', {
+        fetch('http://localhost:9500/todo/complete/', {
         method: 'POST',
         headers: new Headers({
             'Authorization': 'Bearer ' + localStorage.getItem("token"),

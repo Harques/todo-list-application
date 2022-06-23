@@ -11,7 +11,7 @@ const Form = (props) => {
           alert("Invalid todo name.")
           return
       }
-      fetch('http://localhost:9502/add/', {
+      fetch('http://localhost:9500/todo/add/', {
         method: 'POST',
         headers: new Headers({
             'Authorization': 'Bearer ' + localStorage.getItem("token"),

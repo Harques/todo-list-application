@@ -30,6 +30,27 @@ services:
       - eureka-server
     links:
       - eureka-server
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "9503:9503"
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    links:
+      - eureka-server
+  notification-service:
+    build:
+      context: ./notification-service
+      dockerfile: Dockerfile
+      ports:
+        - "9504:9504"
+    depends_on:
+      - user-service
+      - to-do-service
   api-gateway:
     build:
       context: ./api-gateway
@@ -39,6 +60,7 @@ services:
     depends_on:
       - user-service
       - to-do-service
+      - auth-service
       - eureka-server
     links:
       - eureka-server
@@ -52,5 +74,9 @@ services:
       - spring.cloud.gateway.routes[1].id=to-do-service
       - spring.cloud.gateway.routes[1].predicates[0]=Path= /todo/**
       - spring.cloud.gateway.routes[1].filters[0]=StripPrefix=1
+      - spring.cloud.gateway.routes[2].uri=http://auth-service:9503
+      - spring.cloud.gateway.routes[2].id=auth-service
+      - spring.cloud.gateway.routes[2].predicates[0]=Path= /auth/**
+      - spring.cloud.gateway.routes[2].filters[0]=StripPrefix=1
       - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
 
