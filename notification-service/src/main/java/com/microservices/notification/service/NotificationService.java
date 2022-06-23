@@ -33,14 +33,14 @@ public class NotificationService {
 
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("erdemcobanoglu1635@gmail.com", "jbasirvxmotxhvml");
+                return new PasswordAuthentication("ysnnsl51@gmail.com", "mreprhkotuideuat");
 
             }
         });
-        User[] users = restTemplate.getForObject("http://localhost:9501/", User[].class);
+        User[] users = restTemplate.getForObject("http://user-service:9501/", User[].class);
         int counter = 0;
         for(int i = 0; i<users.length; i++){
-            ToDoListResponse[] toDoListResponses = restTemplate.getForObject("http://localhost:9502/list/" + users[i].getEmail(), ToDoListResponse[].class);
+            ToDoListResponse[] toDoListResponses = restTemplate.getForObject("http://to-do-service:9502/list/" + users[i].getEmail(), ToDoListResponse[].class);
             List<NotificationResponse> notificationResponses = new ArrayList<>();
             for(int j = 0; j< toDoListResponses.length; j++){
                 List<ToDo> filteredTodos = toDoListResponses[j].getToDos().stream().filter(t -> t.getDate() != null).collect(Collectors.toList());

@@ -15,7 +15,7 @@ export default class Register extends Component {
           body: data,
         }).then(response => response.json()).then(json => {
           if(json.status === 200){
-            window.location.href = 'login'
+            window.location.href = '/sign-in'
           }
         }).catch(function(){
             document.getElementById("error").style.display = "block"

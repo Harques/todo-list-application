@@ -23,6 +23,7 @@ public class AuthController {
     @Autowired
     private final JwtTokenUtil jwtTokenUtil;
 
+
     public AuthController(JwtTokenUtil jwtTokenUtil){
         this.jwtTokenUtil = jwtTokenUtil;
     }

@@ -18,25 +18,25 @@ const location = useLocation();
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
-            <Link className="navbar-brand" to={location.pathname != "/deneme" && '/sign-in'}>
+            <Link className="navbar-brand" to={location.pathname != "/main" && '/sign-in'}>
               To-Do-List
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  {location.pathname != "/deneme" && <Link className="nav-link" to={'/sign-in'}>
+                  {location.pathname != "/main" && <Link className="nav-link" to={'/sign-in'}>
                     Login
                   </Link>}
                 </li>
                 <li className="nav-item">
-                  {location.pathname != "/deneme" && <Link className="nav-link" to={'/sign-up'}>
+                  {location.pathname != "/main" && <Link className="nav-link" to={'/sign-up'}>
                     Register
                   </Link>}
                 </li>
               </ul>
               <ul className="navbar-nav ms-auto">
 			<li className="nav-item">
-			  {location.pathname === "/deneme" && <a className="nav-link" aria-current="page" onClick={logOff}>Log Off</a>}
+			  {location.pathname === "/main" && <a className="nav-link" aria-current="page" onClick={logOff}>Log Off</a>}
 			</li>	
 		  </ul>	
             </div>

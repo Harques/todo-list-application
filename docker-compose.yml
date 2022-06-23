@@ -46,8 +46,8 @@ services:
     build:
       context: ./notification-service
       dockerfile: Dockerfile
-      ports:
-        - "9504:9504"
+    ports:
+      - "9504:9504"
     depends_on:
       - user-service
       - to-do-service
@@ -69,14 +69,31 @@ services:
       - spring.cloud.gateway.routes[0].uri=http://user-service:9501
       - spring.cloud.gateway.routes[0].id=user-service
       - spring.cloud.gateway.routes[0].predicates=Path= /user/**
-      - spring.cloud.gateway.routes[0].filters[0]=StripPrefix=1
+      - spring.cloud.gateway.routes[0].filters[0]=DedupeResponseHeader=Access-Control-Allow-Origin
+      - spring.cloud.gateway.routes[0].filters[1]=StripPrefix=1
+      - spring.cloud.gateway.routes[0].filters[2]=AuthenticationFilter
       - spring.cloud.gateway.routes[1].uri=http://to-do-service:9502
       - spring.cloud.gateway.routes[1].id=to-do-service
       - spring.cloud.gateway.routes[1].predicates[0]=Path= /todo/**
-      - spring.cloud.gateway.routes[1].filters[0]=StripPrefix=1
+      - spring.cloud.gateway.routes[1].filters[0]=DedupeResponseHeader=Access-Control-Allow-Origin
+      - spring.cloud.gateway.routes[1].filters[1]=StripPrefix=1
+      - spring.cloud.gateway.routes[1].filters[2]=AuthenticationFilter
       - spring.cloud.gateway.routes[2].uri=http://auth-service:9503
       - spring.cloud.gateway.routes[2].id=auth-service
       - spring.cloud.gateway.routes[2].predicates[0]=Path= /auth/**
-      - spring.cloud.gateway.routes[2].filters[0]=StripPrefix=1
+      - spring.cloud.gateway.routes[2].filters[0]=DedupeResponseHeader=Access-Control-Allow-Origin
+      - spring.cloud.gateway.routes[2].filters[1]=StripPrefix=1
       - eureka.client.serviceUrl.defaultZone=http://eureka-server:8761/eureka
+  ui:
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - to-do-service
+      - auth-service
+      - eureka-server
+      - api-gateway
 

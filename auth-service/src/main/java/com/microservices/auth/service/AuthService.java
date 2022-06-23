@@ -28,7 +28,7 @@ public class AuthService {
         registerParameters.add("email", authRegister.getEmail());
         registerParameters.add("password", authRegister.getPassword());
 
-        return restTemplate.postForEntity("http://localhost:9501/register", registerParameters, Boolean.class);
+        return restTemplate.postForEntity("http://user-service:9501/register", registerParameters, Boolean.class);
     }
 
     public ResponseEntity<Integer> login(AuthLogin authLogin){
@@ -36,7 +36,7 @@ public class AuthService {
         loginParameters.add("email", authLogin.getEmail());
         loginParameters.add("password", authLogin.getPassword());
 
-        return restTemplate.postForEntity("http://localhost:9501/login", loginParameters, Integer.class);
+        return restTemplate.postForEntity("http://user-service:9501/login", loginParameters, Integer.class);
 
 
 

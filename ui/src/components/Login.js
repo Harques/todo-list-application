@@ -33,6 +33,7 @@ export default class Login extends Component {
         document.getElementById("error").style.display = "block"
     });
   }
+
   render() {
     return (
       <div className="auth-wrapper">

@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker'
 
 const Todo = (props) => {
     const [inputDate, setInputDate] = useState('\uf133')
+    const [todo, setTodo] = useState(props.todo);
     
     useEffect(() => {
         if(props.todo.date !== null && props.todo.date !== ""){
@@ -17,6 +18,15 @@ const Todo = (props) => {
         }
     },[])
 
+    useEffect(() => {
+        props.setTodos(props.todos.map(t => {
+            if(t.id === todo.id){
+                return todo
+                }
+            return t;
+        }))
+    }, [todo])
+
 
     useEffect(() => {
     $("#date"+props.toDoList.id.toString()+props.todo.id.toString()).datepicker({
@@ -25,19 +35,21 @@ const Todo = (props) => {
             showButtonPanel: true,
             closeText: "Clear/Cancel",
             onClose: function(dateText, obj ){
+                console.log(props.todos)
                 if ($(window.event.srcElement).hasClass('ui-datepicker-close')){
                     $("#date"+props.toDoList.id.toString()+props.todo.id.toString()).val('\uf133');
-                    inputDateDeleteHandler($("#date"+(Math.floor(props.todo.id)).toString()).val())
+                    inputDateDeleteHandler($("#date"+(Math.floor(props.todo.id)).toString()).val(), props.todos)
                 }
                 else{
-                    inputDateAddHandler($("#date"+props.toDoList.id.toString()+props.todo.id.toString()).val())
+                    inputDateAddHandler($("#date"+props.toDoList.id.toString()+props.todo.id.toString()).val(), props.todos)
                 }
             }
             
         })
-    }, [])
+    })
 
-    const inputDateAddHandler = (e) => {
+    const inputDateAddHandler = (e, todos) => {
+        console.log(props.todos)
         if(e.length === 1)
             return
         fetch('http://localhost:9500/todo/date/', {
@@ -55,22 +67,25 @@ const Todo = (props) => {
         }
         if(ok === true){
             setInputDate(e);
-            props.setTodos(props.todos.map(item => {
-                if(item.id === props.todo.id){
-                    return {
-                        ...item, date : e
-                    }
-                }
-                return item;
-    
-            }))
+            setTodo({...todo, date:e});
+            // //            debugger;
+            // // props.setTodos(todos.map(item => {
+            // //     console.log(item);
+            // //     if(item.id === props.todo.id){
+            // //         return {
+            // //             ...item, date:e
+            // //         }
+            // //     }
+            //     return item;
+            // }))
         }
     }).catch(function(){    
 
     });
 
     }
-    const inputDateDeleteHandler = (e) => {
+    const inputDateDeleteHandler = (e, todos) => {
+        console.log(props.todos)
         fetch('http://localhost:9500/todo/date/', {
             method: 'POST',
             headers: new Headers({
@@ -86,15 +101,16 @@ const Todo = (props) => {
             }
             if(ok === true){
                 setInputDate(e);
-                props.setTodos(props.todos.map(item => {
-                    if(item.id === props.todo.id){
-                        return {
-                            ...item, date : ""
-                        }
-                    }
-                    return item;
-        
-                }))
+                setTodo({...todo, date:""});
+                //debugger;
+                // props.setTodos(todos.map(item => {
+                //     if(item.id === props.todo.id){
+                //         return {
+                //             ...item, date:""
+                //         }
+                //     }
+                //     return item;
+                // }))
             }
         }).catch(function(){    
     
@@ -141,6 +157,7 @@ const Todo = (props) => {
             alert("An error occured while completing/uncompleting the todo.")
         }
         if(ok === true){
+            debugger;
             props.setTodos(props.todos.map(item => {
                 if(item.id === props.todo.id){
                     return {
@@ -153,10 +170,6 @@ const Todo = (props) => {
     }).catch(function(){    
 
     });
-    }
-    const dateHandler = () => {
-        console.log("Something in the way")
-
     }
     return(
         <div className="todo">
